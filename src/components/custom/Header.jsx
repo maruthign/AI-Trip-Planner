@@ -85,7 +85,7 @@ function Header() {
           <DialogHeader>
             <DialogTitle>Sign In Required</DialogTitle>
             <DialogDescription>
-              <img src='/logo.svg' alt='Logo' />
+              <img src='/lo.jpg' alt='Logo' />
               <h2 className='font-bold text-lg mt-7'>Sign In With Google</h2>
               <p>Continue with Google to get started</p>
               <Button 
