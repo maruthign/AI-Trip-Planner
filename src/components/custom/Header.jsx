@@ -21,12 +21,12 @@ import axios from 'axios';
 
 function Header() {
 
-  const user=JSON.parse(localStorage.getItem('user'));
+  const user = JSON.parse(localStorage.getItem('user'));
   const [openDialog, setOpenDialog] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(user)
-  },[])
+  }, [])
 
   const login = useGoogleLogin({
     onSuccess: (codeResp) => {
@@ -53,51 +53,51 @@ function Header() {
 
   return (
     <div className='p-3 shadow-sm flex justify-between items-center px-5'>
-      <img src='/lo.jpg'className='h-12 w-50'/>
+      <img src='/lo.jpg' className='h-12 w-50' />
       <div>
-        {user?
-        <div className='flex items-center gap-3'>
-          <a href='/create-trip'>
-          <Button variant="outline" className="rounded-full">Create Trip</Button>
-          </a>
-          <a href='/my-trips'>
-          <Button variant="outline" className="rounded-full">My Trips</Button>
-          </a>
-          <Popover>
-          <PopoverTrigger>
-          <img src={user?.picture} className='h-[35px] w-[35px] rounded-full'/></PopoverTrigger>
-          <PopoverContent>
-            <h2 className='cursor-pointer' onClick={()=>{
-              googleLogout();
-              localStorage.removeItem('user')
-              window.location.reload();
-            }}>LogOut</h2>
-          </PopoverContent>
-          </Popover>
+        {user ?
+          <div className='flex items-center gap-3'>
+            <a href='/create-trip'>
+              <Button variant="outline" className="rounded-full">Create Trip</Button>
+            </a>
+            <a href='/my-trips'>
+              <Button variant="outline" className="rounded-full">My Trips</Button>
+            </a>
+            <Popover>
+              <PopoverTrigger>
+                <img src={user?.picture} className='h-[35px] w-[35px] rounded-full' /></PopoverTrigger>
+              <PopoverContent>
+                <h2 className='cursor-pointer' onClick={() => {
+                  googleLogout();
+                  localStorage.removeItem('user')
+                  window.location.reload();
+                }}>LogOut</h2>
+              </PopoverContent>
+            </Popover>
 
-        </div>
-        :
-      <Button onClick={()=>setOpenDialog(true)}>Sign In</Button>
+          </div>
+          :
+          <Button onClick={() => setOpenDialog(true)}>Sign In</Button>
         }
       </div>
       <Dialog open={openDialog}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Sign In Required</DialogTitle>
-            <DialogDescription>
-              <img src='/lo.jpg' alt='Logo' />
-              <h2 className='font-bold text-lg mt-7'>Sign In With Google</h2>
-              <p>Continue with Google to get started</p>
-              <Button 
-              
-              onClick={login} 
+          </DialogHeader>
+          <div className='flex flex-col items-center max-w-md mx-auto'>
+            <img src='/lo.jpg' alt='Logo' className='w-full' />
+            <h2 className='font-bold text-lg mt-7'>Sign In With Google</h2>
+            <p className='mt-2 text-gray-500'>Continue with Google to get started</p>
+            <Button
+
+              onClick={login}
               className='w-full mt-5 flex gap-4 items-center'>
 
-                <FcGoogle className='h-7 w-7' />
-                Sign In With Google
-              </Button>
-            </DialogDescription>
-          </DialogHeader>
+              <FcGoogle className='h-7 w-7' />
+              Sign In With Google
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

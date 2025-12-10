@@ -51,25 +51,19 @@ function CreateTrip() {
     if (!s || typeof s !== 'string') return s;
     let out = s.trim();
 
-    // remove triple backtick fences with optional language identifier
-    out = out.replace(/```[\s\S]*?```/g, (match) => {
-      // if fence contains JSON inside, return inner JSON, otherwise remove
-      const inner = match.replace(/(^```[\w]*\n)|(\n```$)/g, '');
-      return inner;
-    });
+    // remove markdown code fences
+    out = out.replace(/^```(json)?|```$/gi, '');
+    out = out.trim();
 
-    // remove single backticks
-    out = out.replace(/`{1}([^`]+)`{1}/g, '$1');
+    // Find the first { and last }
+    const firstBrace = out.indexOf('{');
+    const lastBrace = out.lastIndexOf('}');
 
-    // strip leading commentary up to first brace/bracket
-    const firstBrace = out.search(/[\{\[]/);
-    if (firstBrace > 0) out = out.slice(firstBrace);
+    if (firstBrace !== -1 && lastBrace !== -1) {
+      out = out.substring(firstBrace, lastBrace + 1);
+    }
 
-    // truncate after last matching brace/bracket (simple heuristic)
-    const lastBrace = Math.max(out.lastIndexOf('}'), out.lastIndexOf(']'));
-    if (lastBrace !== -1) out = out.slice(0, lastBrace + 1);
-
-    return out.trim();
+    return out;
   };
 
   const OnGenerateTrip = async () => {
@@ -188,9 +182,8 @@ function CreateTrip() {
               <div
                 key={index}
                 onClick={() => handleInputChange('budget', item.title)}
-                className={`p-4 border cursor-pointer rounded-lg hover:shadow-lg ${
-                  formData?.budget === item.title && 'shadow-lg border-black'
-                }`}
+                className={`p-4 border cursor-pointer rounded-lg hover:shadow-lg ${formData?.budget === item.title && 'shadow-lg border-black'
+                  }`}
               >
                 <h2 className='text-4xl'>{item.icon}</h2>
                 <h2 className='font-bold text-lg'>{item.title}</h2>
@@ -207,9 +200,8 @@ function CreateTrip() {
               <div
                 key={index}
                 onClick={() => handleInputChange('traveler', item.people)}
-                className={`p-4 border cursor-pointer rounded-lg hover:shadow-lg ${
-                  formData?.traveler === item.people && 'shadow-lg border-black'
-                }`}
+                className={`p-4 border cursor-pointer rounded-lg hover:shadow-lg ${formData?.traveler === item.people && 'shadow-lg border-black'
+                  }`}
               >
                 <h2 className='text-4xl'>{item.icon}</h2>
                 <h2 className='font-bold text-lg'>{item.title}</h2>
@@ -234,18 +226,18 @@ function CreateTrip() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Sign In Required</DialogTitle>
-            <DialogDescription>
-              <img src='/logo.svg' alt='Logo' />
-              <h2 className='font-bold text-lg mt-7'>Sign In With Google</h2>
-              <p>Continue with Google to get started</p>
-              <Button
-                onClick={login}
-                className='w-full mt-5 flex gap-4 items-center'>
-                <FcGoogle className='h-7 w-7' />
-                Sign In With Google
-              </Button>
-            </DialogDescription>
           </DialogHeader>
+          <div className='flex flex-col items-center max-w-md mx-auto'>
+            <img src='/logo.svg' alt='Logo' className='w-full' />
+            <h2 className='font-bold text-lg mt-7'>Sign In With Google</h2>
+            <p className='mt-2 text-gray-500'>Continue with Google to get started</p>
+            <Button
+              onClick={login}
+              className='w-full mt-5 flex gap-4 items-center'>
+              <FcGoogle className='h-7 w-7' />
+              Sign In With Google
+            </Button>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

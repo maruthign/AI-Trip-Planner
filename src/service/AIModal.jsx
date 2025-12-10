@@ -23,7 +23,7 @@ const defaultGenerationConfig = {
   topP: 0.95,
   topK: 64,
   maxOutputTokens: 8192,
-  // responseMimeType usually not needed for REST/SDK responses; keep JSON in prompt instruct
+  responseMimeType: "application/json",
 };
 
 /**
