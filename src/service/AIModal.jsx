@@ -1,37 +1,87 @@
+// src/service/AIModal.jsx
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-  
-  const apiKey = import.meta.env.VITE_GOOGLE_GEMINI_AI_API_KEY;
-  const genAI = new GoogleGenerativeAI(apiKey);
-  
-  const model = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
-  });
-  
-  const generationConfig = {
-    temperature: 1,
-    topP: 0.95,
-    topK: 64,
-    maxOutputTokens: 8192,
-    responseMimeType: "application/json",
-  };
-  
-    export const chatSession = model.startChat({
-      generationConfig,
-        history: [
-        {
-          role: "user",
-          parts: [
-            {text: "Generate Travel Plan for Location : Las Vegas, for 3 Days for Couple with a Cheap budget , Give me a Hotels option list with HotelName, HotelAddress, Price, hotel image url, geo coordinates, rating, descriptions and suggest itinerary with time, PlaaceName, PlaceDetails, Place Image url, Geo Coordinates, ticket Pricing, Time to travel each of the location for 3 days with each day plan with best time to visit in JSON format."},
-          ],
-        },
-        {
-          role: "model",
-          parts: [
-            {text: "```json\n{\n  \"hotels\": [\n    {\n      \"hotelName\": \"The D Las Vegas\",\n      \"hotelAddress\": \"301 Fremont Street, Las Vegas, NV 89101\",\n      \"price\": \"$50-$100 per night\",\n      \"hotelImageURL\": \"https://www.thed.com/wp-content/uploads/2021/03/the-d-las-vegas-exterior-night.jpg\",\n      \"geoCoordinates\": \"36.1689, -115.1429\",\n      \"rating\": 4.0,\n      \"description\": \"A downtown hotel with a retro vibe, offering affordable rooms, a casino, and a rooftop pool.\"\n    },\n    {\n      \"hotelName\": \"Golden Nugget Las Vegas\",\n      \"hotelAddress\": \"129 E Fremont St, Las Vegas, NV 89101\",\n      \"price\": \"$70-$150 per night\",\n      \"hotelImageURL\": \"https://www.goldennugget.com/las-vegas/media/images/hotel-exterior.jpg\",\n      \"geoCoordinates\": \"36.1678, -115.1415\",\n      \"rating\": 4.5,\n      \"description\": \"A historic hotel with a luxurious feel, featuring a casino, multiple restaurants, and an impressive shark tank.\"\n    },\n    {\n      \"hotelName\": \"Circus Circus Hotel & Casino\",\n      \"hotelAddress\": \"2880 S Las Vegas Blvd, Las Vegas, NV 89109\",\n      \"price\": \"$40-$80 per night\",\n      \"hotelImageURL\": \"https://www.circuscircus.com/media/images/hotel/circus-circus-hotel-exterior.jpg\",\n      \"geoCoordinates\": \"36.1128, -115.1732\",\n      \"rating\": 3.5,\n      \"description\": \"A family-friendly hotel with a circus theme, offering affordable rooms, a casino, and a variety of entertainment options.\"\n    }\n  ],\n  \"itinerary\": [\n    {\n      \"day\": 1,\n      \"plan\": [\n        {\n          \"time\": \"10:00 AM\",\n          \"placeName\": \"Fremont Street Experience\",\n          \"placeDetails\": \"Explore the vibrant pedestrian mall with its iconic canopy, street performers, and free concerts.\",\n          \"placeImageURL\": \"https://www.fremontstreet.com/wp-content/uploads/2023/06/Fremont-Street-Experience-Header-Image.jpg\",\n          \"geoCoordinates\": \"36.1689, -115.1429\",\n          \"ticketPricing\": \"Free\",\n          \"timeToTravel\": \"2 hours\"\n        },\n        {\n          \"time\": \"12:00 PM\",\n          \"placeName\": \"The D Las Vegas\",\n          \"placeDetails\": \"Have a casual lunch at the hotel's food court or grab a bite at one of their restaurants.\",\n          \"placeImageURL\": \"https://www.thed.com/wp-content/uploads/2021/03/the-d-las-vegas-exterior-night.jpg\",\n          \"geoCoordinates\": \"36.1689, -115.1429\",\n          \"ticketPricing\": \"N/A\",\n          \"timeToTravel\": \"1 hour\"\n        },\n        {\n          \"time\": \"1:00 PM\",\n          \"placeName\": \"Neon Museum\",\n          \"placeDetails\": \"See iconic Las Vegas neon signs from the past in an outdoor museum.\",\n          \"placeImageURL\": \"https://www.neonmuseum.org/wp-content/uploads/2021/05/NeonMuseum_FrontGate_Web_1.jpg\",\n          \"geoCoordinates\": \"36.1709, -115.1538\",\n          \"ticketPricing\": \"$20\",\n          \"timeToTravel\": \"1.5 hours\"\n        },\n        {\n          \"time\": \"5:00 PM\",\n          \"placeName\": \"Las Vegas Strip\",\n          \"placeDetails\": \"Walk along the famous Las Vegas Strip and admire the dazzling lights and extravagant hotels.\",\n          \"placeImageURL\": \"https://www.visitlasvegas.com/media/images/hero-images/the-strip-at-night.jpg\",\n          \"geoCoordinates\": \"36.1146, -115.1726\",\n          \"ticketPricing\": \"Free\",\n          \"timeToTravel\": \"1 hour\"\n        },\n        {\n          \"time\": \"6:00 PM\",\n          \"placeName\": \"The LINQ Promenade\",\n          \"placeDetails\": \"Enjoy a casual dinner with views of the Strip at a restaurant on the LINQ Promenade.\",\n          \"placeImageURL\": \"https://www.caesars.com/content/dam/caesars/linq/linq-promenade-exterior-night.jpg\",\n          \"geoCoordinates\": \"36.1141, -115.1729\",\n          \"ticketPricing\": \"N/A\",\n          \"timeToTravel\": \"2 hours\"\n        }\n      ]\n    },\n    {\n      \"day\": 2,\n      \"plan\": [\n        {\n          \"time\": \"10:00 AM\",\n          \"placeName\": \"Red Rock Canyon National Conservation Area\",\n          \"placeDetails\": \"Explore the scenic Red Rock Canyon with its red rock formations, hiking trails, and scenic drives.\",\n          \"placeImageURL\": \"https://www.nps.gov/redr/planyourvisit/images/Red_Rock_Canyon_Main-Page-Hero-Image_2.jpg\",\n          \"geoCoordinates\": \"36.1535, -115.2424\",\n          \"ticketPricing\": \"$15 per vehicle\",\n          \"timeToTravel\": \"3 hours\"\n        },\n        {\n          \"time\": \"1:00 PM\",\n          \"placeName\": \"In-N-Out Burger\",\n          \"placeDetails\": \"Enjoy a classic California-style burger at In-N-Out, a popular fast-food chain.\",\n          \"placeImageURL\": \"https://www.in-n-out.com/images/about/in-n-out-burger-sign.jpg\",\n          \"geoCoordinates\": \"36.1187, -115.1759\",\n          \"ticketPricing\": \"N/A\",\n          \"timeToTravel\": \"1 hour\"\n        },\n        {\n          \"time\": \"2:00 PM\",\n          \"placeName\": \"Bellagio Conservatory & Botanical Garden\",\n          \"placeDetails\": \"Admire the beautiful floral displays and themed gardens at the Bellagio.\",\n          \"placeImageURL\": \"https://www.bellagio.com/media/images/bellagio-conservatory-garden-hero.jpg\",\n          \"geoCoordinates\": \"36.1150, -115.1731\",\n          \"ticketPricing\": \"Free\",\n          \"timeToTravel\": \"1 hour\"\n        },\n        {\n          \"time\": \"3:00 PM\",\n          \"placeName\": \"Fountains of Bellagio\",\n          \"placeDetails\": \"Watch the spectacular synchronized water and light show at the Bellagio Fountains.\",\n          \"placeImageURL\": \"https://www.bellagio.com/media/images/fountains-of-bellagio-hero.jpg\",\n          \"geoCoordinates\": \"36.1150, -115.1731\",\n          \"ticketPricing\": \"Free\",\n          \"timeToTravel\": \"1 hour\"\n        },\n        {\n          \"time\": \"4:00 PM\",\n          \"placeName\": \"The Venetian and The Palazzo\",\n          \"placeDetails\": \"Explore the luxurious Venetian and Palazzo hotels with their canals, gondolas, and upscale shopping.\",\n          \"placeImageURL\": \"https://www.venetian.com/media/images/hero-images/venetian-hotel-casino-hero.jpg\",\n          \"geoCoordinates\": \"36.1161, -115.1721\",\n          \"ticketPricing\": \"Free\",\n          \"timeToTravel\": \"2 hours\"\n        }\n      ]\n    },\n    {\n      \"day\": 3,\n      \"plan\": [\n        {\n          \"time\": \"10:00 AM\",\n          \"placeName\": \"Hoover Dam\",\n          \"placeDetails\": \"Take a day trip to the iconic Hoover Dam and learn about its history and engineering.\",\n          \"placeImageURL\": \"https://www.nps.gov/hdam/planyourvisit/images/Hoover-Dam-Hero.jpg\",\n          \"geoCoordinates\": \"36.0241, -114.9231\",\n          \"ticketPricing\": \"N/A\",\n          \"timeToTravel\": \"2 hours\"\n        },\n        {\n          \"time\": \"1:00 PM\",\n          \"placeName\": \"Seven Magic Mountains\",\n          \"placeDetails\": \"See the colorful outdoor art installation of seven towering, brightly colored boulders.\",\n          \"placeImageURL\": \"https://www.sevenmagicmountains.com/sites/default/files/2021-04/7MM-hero_1.jpg\",\n          \"geoCoordinates\": \"36.0583, -115.1490\",\n          \"ticketPricing\": \"Free\",\n          \"timeToTravel\": \"1 hour\"\n        },\n        {\n          \"time\": \"2:00 PM\",\n          \"placeName\": \"Springs Preserve\",\n          \"placeDetails\": \"Explore the desert landscape and learn about its unique ecosystem at Springs Preserve.\",\n          \"placeImageURL\": \"https://www.springspreserve.org/sites/default/files/styles/hero_image/public/2017-07/SpringsPreserve_Hero_02.jpg?itok=X8o7i57N\",\n          \"geoCoordinates\": \"36.1496, -115.1377\",\n          \"ticketPricing\": \"$15\",\n          \"timeToTravel\": \"2 hours\"\n        },\n        {\n          \"time\": \"4:00 PM\",\n          \"placeName\": \"Downtown Container Park\",\n          \"placeDetails\": \"Enjoy dinner and browse unique shops at the Downtown Container Park, made from recycled shipping containers.\",\n          \"placeImageURL\": \"https://www.downtowncontainerpark.com/images/gallery/2017/container-park-exterior.jpg\",\n          \"geoCoordinates\": \"36.1677, -115.1426\",\n          \"ticketPricing\": \"N/A\",\n          \"timeToTravel\": \"2 hours\"\n        }\n      ]\n    }\n  ]\n}\n```\n\n**Explanation of the JSON format:**\n\n* **hotels:** An array of hotel objects with information about each hotel.\n* **hotelName:** The name of the hotel.\n* **hotelAddress:** The street address of the hotel.\n* **price:** The estimated price range per night.\n* **hotelImageURL:** The URL of an image representing the hotel.\n* **geoCoordinates:** The latitude and longitude coordinates of the hotel.\n* **rating:** The average rating of the hotel (out of 5 stars).\n* **description:** A brief description of the hotel.\n* **itinerary:** An array of day plans, each with a list of activities.\n* **day:** The day number of the itinerary (1, 2, or 3).\n* **plan:** An array of activities for the day, each with the following information:\n    * **time:** The estimated time of the activity.\n    * **placeName:** The name of the place to visit.\n    * **placeDetails:** A brief description of the place.\n    * **placeImageURL:** The URL of an image representing the place.\n    * **geoCoordinates:** The latitude and longitude coordinates of the place.\n    * **ticketPricing:** The estimated price of admission (if applicable).\n    * **timeToTravel:** The estimated time needed to travel to the location.\n\n**Important Notes:**\n\n* This itinerary is a suggestion and can be customized based on your interests and preferences.\n* The prices listed are estimates and may vary depending on the season and availability.\n* It's always a good idea to book hotels and attractions in advance, especially during peak season.\n* Remember to check for any closures or changes in hours of operation before you go.\n* Be aware that Las Vegas can be very hot in the summer, so be sure to stay hydrated and dress accordingly.\n\n**Enjoy your trip to Las Vegas!** \n"},
-          ],
-        },
-      ],
+/**
+ * WARNING: Using API key in client code exposes it to users.
+ * Move this call to a server endpoint for production.
+ */
+
+const apiKey = import.meta.env.VITE_GOOGLE_GEMINI_AI_API_KEY;
+if (!apiKey) {
+  console.warn("VITE_GOOGLE_GEMINI_AI_API_KEY is not set in environment");
+}
+
+const genAI = new GoogleGenerativeAI(apiKey);
+
+const model = genAI.getGenerativeModel({
+  model: "gemini-2.5-flash",
+});
+
+// default generation config — tweak as needed
+const defaultGenerationConfig = {
+  temperature: 0.9,
+  topP: 0.95,
+  topK: 64,
+  maxOutputTokens: 8192,
+  // responseMimeType usually not needed for REST/SDK responses; keep JSON in prompt instruct
+};
+
+/**
+ * generateFromPrompt(prompt)
+ * - sends a single prompt to Gemini 2.5 Flash (generateContent)
+ * - returns the cleaned textual output (string) and raw response
+ */
+export async function generateFromPrompt(prompt) {
+  try {
+    const contents = [
+      {
+        role: "user",
+        parts: [{ text: prompt }],
+      },
+    ];
+
+    // Use SDK generateContent method (returns a response stream or object depending on SDK version)
+    const res = await model.generateContent({
+      contents,
+      generationConfig: defaultGenerationConfig,
     });
-  
-    
+
+    // The SDK's returned shape may vary. Try common shapes and extract text.
+    let outText = "";
+
+    // 1) res?.response?.text() (SDK chat-style)
+    try {
+      if (res?.response && typeof res.response.text === "function") {
+        outText = res.response.text();
+      }
+    } catch (e) {
+      // ignore
+    }
+
+    // 2) res?.candidates (some SDK shapes)
+    if (!outText && Array.isArray(res?.candidates) && res.candidates.length) {
+      outText = res.candidates.map((c) => c?.content || c?.text || "").join("\n");
+    }
+
+    // 3) res?.output or res?.outputs
+    if (!outText && Array.isArray(res?.output) && res.output.length) {
+      outText = res.output
+        .map((o) => {
+          if (typeof o === "string") return o;
+          if (Array.isArray(o?.content)) return o.content.map((p) => p?.text || "").join("");
+          return o?.text || o?.content || "";
+        })
+        .join("\n");
+    }
+
+    // 4) fallback: JSON stringify
+    if (!outText) {
+      outText = JSON.stringify(res);
+    }
+
+    return { text: outText, raw: res };
+  } catch (err) {
+    console.error("generateFromPrompt error:", err);
+    throw err;
+  }
+}
