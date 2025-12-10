@@ -52,7 +52,7 @@ function Header() {
   };
 
   return (
-    <div className='p-3 shadow-sm flex justify-between items-center px-5'>
+    <div className='p-3 shadow-md flex justify-between items-center px-5 sticky top-0 z-50 bg-slate-100 border-b border-gray-200'>
       <img src='/lo.jpg' className='h-12 w-50' />
       <div>
         {user ?
